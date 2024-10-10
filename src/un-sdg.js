@@ -11,9 +11,7 @@ export class unSdg extends DDDSuper(LitElement) {
     super();
     this.goal = "1";
     this.width = 300;
-    this.color_only = false;
-    
-    
+    this.color_only = false;  
   }
 
   static get properties() {
@@ -29,6 +27,7 @@ export class unSdg extends DDDSuper(LitElement) {
     return [super.styles,
     css`
       :host {
+        /* set color variables */
         --un-sdg-color-1: rgb(235, 28, 44);
         --un-sdg-color-2: rgb(210, 160, 42);
         --un-sdg-color-3: rgb(44, 155, 72);
@@ -46,14 +45,12 @@ export class unSdg extends DDDSuper(LitElement) {
         --un-sdg-color-15: rgb(63, 175, 73);
         --un-sdg-color-16: rgb(1, 85, 138);
         --un-sdg-color-17: rgb(25, 54, 103);
+        --un-sdg-color-circle: rgb(255,255,255);
 
-        display: inline-block;
-        color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
-        font-size: var(--un-sdg-font-size, var(--ddd-font-size-s));
+        display: block;
       }
 
+      /* set color for when color_only is true*/
       .color.wrapper{
         background-color: var(--goal-color);
       }
@@ -63,9 +60,8 @@ export class unSdg extends DDDSuper(LitElement) {
         height: var(--width);
       }
 
-      
+
       img {
-        /* object-fit: contain; */
         object-fit: contain;
       } 
 
@@ -77,8 +73,9 @@ export class unSdg extends DDDSuper(LitElement) {
     `];
   }
 
+  // this function return label according to current this.goal 
   getLabel(){
-    const unSDGs = [
+    const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
       "No Poverty",
       "Zero Hunger",
       "Good Health and Well-being",
@@ -97,13 +94,15 @@ export class unSdg extends DDDSuper(LitElement) {
       "Peace, Justice, and Strong Institutions",
       "Partnerships for the Goals"
     ];
-    return unSDGs[this.goal-1];
+    return SDGLabelList[this.goal-1]; 
   }
+
   render() {
     let imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href;
+
     if(this.color_only){
       return html`
-      <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var( --un-sdg-color-${this.goal})"></div>
+      <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})"></div>
       `;
     } else{
     return html`
