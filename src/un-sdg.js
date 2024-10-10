@@ -10,11 +10,13 @@ export class unSdg extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.title = "";
+    this.number = "1";
   }
 
   static get properties() {
     return {
       title: { type: String },
+      goal: { type: String, reflect: true},
     };
   }
 
@@ -40,11 +42,15 @@ export class unSdg extends DDDSuper(LitElement) {
   }
 
   render() {
+    let imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href;
     return html`
-<div class="wrapper">
-  <div>${this.title}</div>
-  <slot></slot>
-</div>`;
+    <div class="wrapper">
+      <!-- style="background-color: var()...${this.goal} -->
+      <img src=${imgSrc} alt="">
+      ${this.goal}
+      <p>hello world</p>
+      <slot></slot>
+    </div>`;
   }
 
   /**
