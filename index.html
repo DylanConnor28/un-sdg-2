@@ -38,11 +38,25 @@
     <h1>un-sdg</h1>
     <!-- this is going to do whatever the tag's defaults are -->
     <h2>Default</h2>
-    <un-sdg goal="1"></un-sdg>
+    <un-sdg></un-sdg>
+    <un-sdg goal="2"></un-sdg>
+    <un-sdg goal="10" color_only></un-sdg>
+
+    <div>>
+    <un-sdg class="random-sdg"></un-sdg>
+    <button class="random-button">Randomize</button>
+    </div>
     <h2>Slot usage</h2>
     <un-sdg data-accent="2" data-primary="17"><div>Sample slot content</div></un-sdg>
     <h2>Property usage</h2>
     <un-sdg id="example" title="Sample property title"></un-sdg>
+    
+
+    <script>
+      document.querySelector(".random-button").addEventListener('click', (e)=> {
+        alert("fag")
+      }
+    </script>
     
   </div>
   <script type="module" src="./src/un-sdg.js"></script>
