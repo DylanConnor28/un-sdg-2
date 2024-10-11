@@ -7,6 +7,9 @@ export class unSdg extends DDDSuper(LitElement) {
     return "un-sdg";
   }
 
+  updated(){
+    
+  }
 
   constructor() {
     super();
@@ -107,18 +110,23 @@ export class unSdg extends DDDSuper(LitElement) {
     } else if (this.goal === "circle"){
       return "UN Sustainable Development Goals Logo"
     } else{
-      return "aaa"
+      return ""
     }
   }
 
-  render() {
+  getImgSrc(){
     let imgSrc;
     if(this.goal === 'all'){
       imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; 
     } else{
-      let path=`../lib/svg/${this.goal}.svg`;
+      let path=String(`../lib/svg/${this.goal}.svg`);
       imgSrc = new URL(path, import.meta.url).href; 
     }
+    return imgSrc;
+  }
+
+  render() {
+
     return html`
       ${this.colorOnly ? html`
         <!-- if colorOnly is true, render div with class .color (for styling purposes) -->
@@ -131,7 +139,7 @@ export class unSdg extends DDDSuper(LitElement) {
           <!-- render image using URL object created earlier, 
            alt text is set according to this.goal by calling getLabel()
            image width is set according to this.width-->
-          <img src=${imgSrc} alt=${this.getLabel()} loading="lazy" fetchpriority="low" width=${this.width}> 
+          <img src=${this.getImgSrc()} alt=${this.getLabel()} loading="lazy" fetchpriority="low" width=${this.width}> 
         </div>
       `
     }`;
