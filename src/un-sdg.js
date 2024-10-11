@@ -102,9 +102,9 @@ export class unSdg extends DDDSuper(LitElement) {
   render() {
     let imgSrc;
     if(this.goal === 'all'){
-      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; 
+      imgSrc = new URL(`../public/lib/svg/all.png`, import.meta.url).href; 
     } else{
-      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href; 
+      imgSrc = new URL(`../public/lib/svg/${this.goal}.svg`, import.meta.url).href; 
     }
 
     return html`
