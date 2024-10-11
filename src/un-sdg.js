@@ -106,7 +106,6 @@ export class unSdg extends DDDSuper(LitElement) {
     } else{
       imgSrc = new URL(`../public/lib/svg/${this.goal}.svg`, import.meta.url).href; 
     }
-
     return html`
       ${this.colorOnly ? html`
         <!-- if colorOnly is true, render div with class .color (for styling purposes) -->
