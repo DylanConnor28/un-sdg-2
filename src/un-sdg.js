@@ -114,7 +114,8 @@ export class unSdg extends DDDSuper(LitElement) {
     if(this.goal === 'all'){
       imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; 
     } else{
-      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href; 
+      let path=`../lib/svg/${this.goal}.svg`;
+      imgSrc = new URL(path, import.meta.url).href; 
     }
     return html`
       ${this.colorOnly ? html`
