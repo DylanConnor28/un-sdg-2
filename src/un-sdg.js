@@ -7,6 +7,7 @@ export class unSdg extends DDDSuper(LitElement) {
     return "un-sdg";
   }
 
+
   constructor() {
     super();
     this.goal = "1";
@@ -77,7 +78,8 @@ export class unSdg extends DDDSuper(LitElement) {
 
   // This function return label according to current this.goal 
   getLabel(){
-    if (Number.isInteger(this.goal)){
+    if (Number.isInteger(Number(this.goal))){
+
       const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
         "No Poverty",
         "Zero Hunger",
@@ -105,7 +107,7 @@ export class unSdg extends DDDSuper(LitElement) {
     } else if (this.goal === "circle"){
       return "UN Sustainable Development Goals Logo"
     } else{
-      return ""
+      return "aaa"
     }
   }
 
