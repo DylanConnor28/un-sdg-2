@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-
+//ask about updated(), reflect: true, and comments
 export class unSdg extends DDDSuper(LitElement) {
 
   static get tag() {
@@ -10,7 +10,7 @@ export class unSdg extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.goal = "1";
-    this.width = 300;
+    this.width = 200;
     this.colorOnly = false;  
   }
 
@@ -51,25 +51,22 @@ export class unSdg extends DDDSuper(LitElement) {
         display: block;
       }
 
-      /* set color for when colorOnly is true, square dimensions*/
+      /* set bg-color for when colorOnly is true, square dimensions*/
       .color.wrapper{
         background-color: var(--goal-color);
-        width: var(--width);
-        height: var(--width);
+        width: var(--width, 200); //width: --width == this.width (defined in render())
+        height: var(--width, 200); //height: --width == this.width
       }
 
       .svg.wrapper{
-        width: var(--width);
+        width: var(--width, 200);
         height: auto;
       }
 
-
       img {
-        width: var(--width);
+        width: var(--width, 200);
         display: block;
-  
       } 
-
 
       div {
         padding: 0;
@@ -78,7 +75,7 @@ export class unSdg extends DDDSuper(LitElement) {
     `];
   }
 
-  // this function return label according to current this.goal 
+  // This function return label according to current this.goal 
   getLabel(){
     const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
       "No Poverty",
@@ -105,23 +102,26 @@ export class unSdg extends DDDSuper(LitElement) {
   render() {
     let imgSrc;
     if(this.goal === 'all'){
-      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href;
-
+      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; //since ALL is a png, needs a seperate definition
     } else{
-      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href;
+      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href; //image is set according to current this.goal
     }
 
     return html`
       ${this.colorOnly ? html`
-          <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})"></div>                
+        <!-- if colorOnly is true, render div with class .color (for styling purposes) -->
+        <!-- CSS variable --width is set according this.width -->
+        <!-- CSS variable --goal-color is created and set according to the color of the current this.goal -->
+        <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})"></div>                
       ` : html`
+        <!-- if colorOnly is false, render div with class .svg, --width is set according to this.width -->
         <div class="svg wrapper"  style="--width: ${this.width}px">
+          <!-- render image using URL object created earlier, 
+           alt text is set according to this.goal by calling getLabel()
+           image width is set according to this.width-->
           <img src=${imgSrc} alt=${this.getLabel()} loading="lazy" fetchpriority="low" width=${this.width}> 
         </div>
       `
-        
-      
-      
     }`;
     
   }
