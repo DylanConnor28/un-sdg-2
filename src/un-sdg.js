@@ -58,7 +58,7 @@ export class unSdg extends DDDSuper(LitElement) {
       /* set bg-color for when colorOnly is true, square dimensions*/
       .color.wrapper{
         background-color: var(--goal-color);
-        width: var(--width, 200); 
+        width: var(--width, 200); /*--width (defined in render())== this.width  */
         height: var(--width, 200); 
       }
 
@@ -68,7 +68,7 @@ export class unSdg extends DDDSuper(LitElement) {
       }
 
       img {
-        width: var(--width, 200);
+        width: var(--width, 200); /*set image width*/
         display: block;
       } 
 
@@ -79,42 +79,46 @@ export class unSdg extends DDDSuper(LitElement) {
     `];
   }
 
-  // This function return label according to current this.goal 
+  // This function returns label according to current this.goal 
   getLabel(){
-    if (Number.isInteger(Number(this.goal))){
+    if (!this.label){ //if this.label is not defined return label according to goal 
+      if (Number.isInteger(Number(this.goal))){
+        const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
+          "No Poverty",
+          "Zero Hunger",
+          "Good Health and Well-being",
+          "Quality Education",
+          "Gender Equality",
+          "Clean Water and Sanitation",
+          "Affordable and Clean Energy",
+          "Decent Work and Economic Growth",
+          "Industry, Innovation, and Infrastructure",
+          "Reduced Inequalities",
+          "Sustainable Cities and Communities",
+          "Responsible Consumption and Production",
+          "Climate Action",
+          "Life Below Water",
+          "Life on Land",
+          "Peace, Justice, and Strong Institutions",
+          "Partnerships for the Goals"
+        ];
+        return SDGLabelList[this.goal-1]; 
+        
+      } else if(this.goal === "all"){
+        return "UN Sustainable Development Goals"
 
-      const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
-        "No Poverty",
-        "Zero Hunger",
-        "Good Health and Well-being",
-        "Quality Education",
-        "Gender Equality",
-        "Clean Water and Sanitation",
-        "Affordable and Clean Energy",
-        "Decent Work and Economic Growth",
-        "Industry, Innovation, and Infrastructure",
-        "Reduced Inequalities",
-        "Sustainable Cities and Communities",
-        "Responsible Consumption and Production",
-        "Climate Action",
-        "Life Below Water",
-        "Life on Land",
-        "Peace, Justice, and Strong Institutions",
-        "Partnerships for the Goals"
-      ];
+      } else if (this.goal === "circle"){
+        return "UN Sustainable Development Goals Logo"
 
-      return SDGLabelList[this.goal-1]; 
-
-    } else if(this.goal === "all"){
-      return "UN Sustainable Development Goals"
-    } else if (this.goal === "circle"){
-      return "UN Sustainable Development Goals Logo"
+      } else{
+        return ""
+      }
     } else{
-      return ""
+      return this.label;
     }
   }
 
-  // return img path according to this.goal
+  //This function returns img path according to this.goal
   getImgSrc(){
     let imgSrc;
     if(this.goal === 'all'){
@@ -122,7 +126,6 @@ export class unSdg extends DDDSuper(LitElement) {
     } else{
       // let path=String(`../lib/svg/${this.goal}.svg`);
       let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/0c920952e501b3e21b5dcd14026aae1f5ba20d41/lib/svg/${this.goal}.svg`);
-      
       imgSrc = new URL(path, import.meta.url).href; 
     }
     return imgSrc;
