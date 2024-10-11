@@ -11,7 +11,7 @@ export class unSdg extends DDDSuper(LitElement) {
     super();
     this.goal = "1";
     this.width = 300;
-    this.color_only = false;  
+    this.colorOnly = false;  
   }
 
   static get properties() {
@@ -19,7 +19,7 @@ export class unSdg extends DDDSuper(LitElement) {
       goal: { type: String},
       label: { type: String},
       width: { type: Number},
-      color_only: {type: Boolean},
+      colorOnly: {type: Boolean},
     };
   }
   
@@ -46,23 +46,28 @@ export class unSdg extends DDDSuper(LitElement) {
         --un-sdg-color-16: rgb(1, 85, 138);
         --un-sdg-color-17: rgb(25, 54, 103);
         --un-sdg-color-circle: rgb(255,255,255);
+        --un-sdg-color-all: rgb(255,255,255);
 
         display: block;
       }
 
-      /* set color for when color_only is true*/
+      /* set color for when colorOnly is true, square dimensions*/
       .color.wrapper{
         background-color: var(--goal-color);
-      }
-
-      .wrapper{
         width: var(--width);
         height: var(--width);
       }
 
+      .svg.wrapper{
+        width: var(--width);
+        height: auto;
+      }
+
 
       img {
-        object-fit: contain;
+        width: var(--width);
+        display: block;
+  
       } 
 
 
@@ -98,20 +103,27 @@ export class unSdg extends DDDSuper(LitElement) {
   }
 
   render() {
-    let imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href;
+    let imgSrc;
+    if(this.goal === 'all'){
+      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href;
 
-    if(this.color_only){
-      return html`
-      <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})"></div>
-      `;
     } else{
-    return html`
-
-      <div class="svg wrapper"  style="--width: ${this.width}px">
-        <!-- style="background-color: var()...${this.goal} -->
-        <img src=${imgSrc} alt=${this.getLabel()} loading="lazy" fetchpriority="low">
-      </div>`;
+      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href;
     }
+
+    return html`
+      ${this.colorOnly ? html`
+          <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})"></div>                
+      ` : html`
+        <div class="svg wrapper"  style="--width: ${this.width}px">
+          <img src=${imgSrc} alt=${this.getLabel()} loading="lazy" fetchpriority="low" width=${this.width}> 
+        </div>
+      `
+        
+      
+      
+    }`;
+    
   }
 
   /**
