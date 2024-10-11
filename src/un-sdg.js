@@ -77,41 +77,51 @@ export class unSdg extends DDDSuper(LitElement) {
 
   // This function return label according to current this.goal 
   getLabel(){
-    const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
-      "No Poverty",
-      "Zero Hunger",
-      "Good Health and Well-being",
-      "Quality Education",
-      "Gender Equality",
-      "Clean Water and Sanitation",
-      "Affordable and Clean Energy",
-      "Decent Work and Economic Growth",
-      "Industry, Innovation, and Infrastructure",
-      "Reduced Inequalities",
-      "Sustainable Cities and Communities",
-      "Responsible Consumption and Production",
-      "Climate Action",
-      "Life Below Water",
-      "Life on Land",
-      "Peace, Justice, and Strong Institutions",
-      "Partnerships for the Goals"
-    ];
-    return SDGLabelList[this.goal-1]; 
+    if (Number.isInteger(this.goal)){
+      const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
+        "No Poverty",
+        "Zero Hunger",
+        "Good Health and Well-being",
+        "Quality Education",
+        "Gender Equality",
+        "Clean Water and Sanitation",
+        "Affordable and Clean Energy",
+        "Decent Work and Economic Growth",
+        "Industry, Innovation, and Infrastructure",
+        "Reduced Inequalities",
+        "Sustainable Cities and Communities",
+        "Responsible Consumption and Production",
+        "Climate Action",
+        "Life Below Water",
+        "Life on Land",
+        "Peace, Justice, and Strong Institutions",
+        "Partnerships for the Goals"
+      ];
+
+      return SDGLabelList[this.goal-1]; 
+
+    } else if(this.goal === "all"){
+      return "UN Sustainable Development Goals"
+    } else if (this.goal === "circle"){
+      return "UN Sustainable Development Goals Logo"
+    } else{
+      return ""
+    }
   }
 
   render() {
     let imgSrc;
     if(this.goal === 'all'){
-      imgSrc = new URL(`../public/lib/svg/all.png`, import.meta.url).href; 
+      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; 
     } else{
-      imgSrc = new URL(`../public/lib/svg/${this.goal}.svg`, import.meta.url).href; 
+      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href; 
     }
     return html`
       ${this.colorOnly ? html`
         <!-- if colorOnly is true, render div with class .color (for styling purposes) -->
         <!-- CSS variable --width is set according this.width -->
         <!-- CSS variable --goal-color is created and set according to the color of the current this.goal -->
-        <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})"></div>                
+        <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})" label="${this.getLabel()} color only"></div>                
       ` : html`
         <!-- if colorOnly is false, render div with class .svg, --width is set according to this.width -->
         <div class="svg wrapper"  style="--width: ${this.width}px">
