@@ -54,8 +54,8 @@ export class unSdg extends DDDSuper(LitElement) {
       /* set bg-color for when colorOnly is true, square dimensions*/
       .color.wrapper{
         background-color: var(--goal-color);
-        width: var(--width, 200); //width: --width == this.width (defined in render())
-        height: var(--width, 200); //height: --width == this.width
+        width: var(--width, 200); 
+        height: var(--width, 200); 
       }
 
       .svg.wrapper{
@@ -102,9 +102,9 @@ export class unSdg extends DDDSuper(LitElement) {
   render() {
     let imgSrc;
     if(this.goal === 'all'){
-      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; //since ALL is a png, needs a seperate definition
+      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; 
     } else{
-      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href; //image is set according to current this.goal
+      imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href; 
     }
 
     return html`
