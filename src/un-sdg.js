@@ -117,14 +117,8 @@ export class unSdg extends DDDSuper(LitElement) {
 
   //This function returns img path according to this.goal
   getImgSrc(){
-    let imgSrc;
-    if(this.goal === 'all'){ 
-      imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; 
-    } else{
-      // let path=String(`../lib/svg/${this.goal}.svg`);
-      let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/0c920952e501b3e21b5dcd14026aae1f5ba20d41/lib/svg/${this.goal}.svg`);
-      imgSrc = new URL(path, import.meta.url).href; 
-    }
+     let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/0c920952e501b3e21b5dcd14026aae1f5ba20d41/lib/svg/${this.goal}.svg`);
+    let imgSrc = new URL(path, import.meta.url).href; 
     return imgSrc;
   }
 
