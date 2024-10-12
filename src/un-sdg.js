@@ -51,20 +51,18 @@ export class unSdg extends DDDSuper(LitElement) {
         --un-sdg-color-17: rgb(25, 54, 103);
         --un-sdg-color-circle: rgb(255,255,255);
         --un-sdg-color-all: rgb(255,255,255);
-
         display: block;
       }
 
       /* set bg-color for when colorOnly is true, square dimensions*/
       .color.wrapper{
-        background-color: var(--goal-color);
-        width: var(--width, 200); /*--width (defined in render())== this.width  */
+        background-color: var(--goal-color); /*--goal-color [defined in render()] set according to current this.goal */
+        width: var(--width, 200); /*--width [defined in render()] = this.width */
         height: var(--width, 200); 
       }
 
       .svg.wrapper{
-        width: var(--width, 200);
-        height: auto;
+        width: var(--width, 200); /*set wrapper width*/
       }
 
       img {
@@ -81,9 +79,10 @@ export class unSdg extends DDDSuper(LitElement) {
 
   // This function returns label according to current this.goal 
   getLabel(){
-    if (!this.label){ //if this.label is not defined return label according to goal 
-      if (Number.isInteger(Number(this.goal))){
-        const SDGLabelList = [ //list of labels that are sorted according to goal number - 1 to 17
+    if (!this.label){ //if this.label is not defined in html property, return label according to goal 
+
+      if (Number.isInteger(Number(this.goal))){ //if this.goal is a number, return title of SDG corrseponding to this.goal
+        const SDGLabelList = [ //list of SDG title that are sorted according to goal number from 1 to 17
           "No Poverty",
           "Zero Hunger",
           "Good Health and Well-being",
@@ -105,15 +104,13 @@ export class unSdg extends DDDSuper(LitElement) {
         return SDGLabelList[this.goal-1]; 
         
       } else if(this.goal === "all"){
-        return "UN Sustainable Development Goals"
-
+        return "UN Sustainable Development Goals";
       } else if (this.goal === "circle"){
-        return "UN Sustainable Development Goals Logo"
-
+        return "UN Sustainable Development Goals Logo";
       } else{
-        return ""
+        return "";
       }
-    } else{
+    } else{ // if this.label is defined, return this.label
       return this.label;
     }
   }
@@ -121,7 +118,7 @@ export class unSdg extends DDDSuper(LitElement) {
   //This function returns img path according to this.goal
   getImgSrc(){
     let imgSrc;
-    if(this.goal === 'all'){
+    if(this.goal === 'all'){ 
       imgSrc = new URL(`../lib/svg/all.png`, import.meta.url).href; 
     } else{
       // let path=String(`../lib/svg/${this.goal}.svg`);
@@ -137,21 +134,18 @@ export class unSdg extends DDDSuper(LitElement) {
       ${this.colorOnly ? html`
         <!-- if colorOnly is true, render div with class .color (for styling purposes) -->
         <!-- CSS variable --width is set according this.width -->
-        <!-- CSS variable --goal-color is created and set according to the color of the current this.goal -->
+        <!-- CSS variable --goal-color is created and set according to current this.goal -->
         <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})" label="${this.getLabel()} color only"></div>                
       ` : html`
         <!-- if colorOnly is false, render div with class .svg, --width is set according to this.width -->
         <div class="svg wrapper"  style="--width: ${this.width}px">
-          <!-- render image using URL object created earlier, 
-           alt text is set according to this.goal by calling getLabel()
+          <!-- call getImgSrc() for image URL, alt text is set by calling getLabel()
            image width is set according to this.width-->
           <img src=${this.getImgSrc()} alt=${this.getLabel()} loading="lazy" fetchpriority="low" width=${this.width}> 
         </div>
       `
     }`;
-    
   }
-
   /**
    * haxProperties integration via file reference
    */
