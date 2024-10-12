@@ -1,6 +1,5 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-//ask about updated(), reflect: true, and comments
 export class unSdg extends DDDSuper(LitElement) {
 
   static get tag() {
@@ -8,13 +7,13 @@ export class unSdg extends DDDSuper(LitElement) {
   }
 
   updated(){
-    
+    // web component works fine without updated()
   }
 
   constructor() {
     super();
-    this.goal = "1";
-    this.width = 200;
+    this.goal = "circle"; //default to SDG logo
+    this.width = 200; // refered in render() to define CSS property --width
     this.colorOnly = false;  
   }
 
@@ -117,7 +116,9 @@ export class unSdg extends DDDSuper(LitElement) {
 
   //This function returns img path according to this.goal
   getImgSrc(){
-     let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/0c920952e501b3e21b5dcd14026aae1f5ba20d41/lib/svg/${this.goal}.svg`);
+    // relative path wouldnt work on vercel so use github src link instead
+    // let path=String(`../lib/svg/${this.goal}.svg`);  
+    let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/45be96982fa85a9a6c922e1c40b06d35fe6e4579/lib/svg/${this.goal}.svg`);
     let imgSrc = new URL(path, import.meta.url).href; 
     return imgSrc;
   }
