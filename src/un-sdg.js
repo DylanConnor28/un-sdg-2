@@ -53,21 +53,17 @@ export class unSdg extends DDDSuper(LitElement) {
         display: block;
       }
 
-      /* set bg-color for when colorOnly is true, square dimensions*/
-      .color.wrapper{
+      /* set width and bg-color of img, .color.wrapper, and .svg.wrapper  */
+      .img,
+      .wrapper{
+        width: var(--width, 200px); /*--width [defined in render()] = this.width; defaults to 200px if variable unsupported*/
         background-color: var(--goal-color); /*--goal-color [defined in render()] set according to current this.goal */
-        width: var(--width, 200); /*--width [defined in render()] = this.width */
-        height: var(--width, 200); 
+        display: block; /* to remove weird margin when img is inline */
       }
 
-      .svg.wrapper{
-        width: var(--width, 200); /*set wrapper width*/
+      .color.wrapper{
+        height: var(--width, 200px);  /* square dimensions */
       }
-
-      img {
-        width: var(--width, 200); /*set image width*/
-        display: block;
-      } 
 
       div {
         padding: 0;
@@ -107,19 +103,19 @@ export class unSdg extends DDDSuper(LitElement) {
       } else if (this.goal === "circle"){
         return "UN Sustainable Development Goals Logo";
       } else{
-        return "";
+        return ""; // return empty string if this.goal out of scope
       }
     } else{ // if this.label is defined, return this.label
       return this.label;
     }
   }
 
-  //This function returns img path according to this.goal
+  //This function returns URL object of image path according to this.goal
   getImgSrc(){
     // relative path wouldnt work on vercel so use github src link instead
     // let path=String(`../lib/svg/${this.goal}.svg`);  
-    let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/45be96982fa85a9a6c922e1c40b06d35fe6e4579/lib/svg/${this.goal}.svg`);
-    let imgSrc = new URL(path, import.meta.url).href; 
+    let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/45be96982fa85a9a6c922e1c40b06d35fe6e4579/lib/svg/${this.goal}.svg`); 
+    let imgSrc = new URL(path, import.meta.url).href; //create URL object to path defined
     return imgSrc;
   }
 
@@ -133,7 +129,7 @@ export class unSdg extends DDDSuper(LitElement) {
         <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})" label="${this.getLabel()} color only"></div>                
       ` : html`
         <!-- if colorOnly is false, render div with class .svg, --width is set according to this.width -->
-        <div class="svg wrapper"  style="--width: ${this.width}px">
+        <div class="svg wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})">
           <!-- call getImgSrc() for image URL, alt text is set by calling getLabel()
            image width is set according to this.width-->
           <img src=${this.getImgSrc()} alt=${this.getLabel()} loading="lazy" fetchpriority="low" width=${this.width}> 
