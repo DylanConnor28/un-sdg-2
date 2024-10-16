@@ -21,6 +21,7 @@
     "dependencies": {
         "@haxtheweb/d-d-d": "^9.0.5",
         "lit": "^3.1.4",
+        "rollup-plugin-copy": "^3.5.0",
         "un-sdg": "file:"
     },
     "devDependencies": {
