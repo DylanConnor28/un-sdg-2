@@ -19,10 +19,10 @@ export class unSdg extends DDDSuper(LitElement) {
 
   static get properties() {
     return {
-      goal: { type: String},
-      label: { type: String},
-      width: { type: Number},
-      colorOnly: {type: Boolean},
+      goal: { type: String},//values include numbers 1-17, all, and circle 
+      label: { type: String}, //alt text and div label for accessibility, defined in render
+      width: { type: Number}, //used for div and img width, unit in pixels
+      colorOnly: {type: Boolean}, 
     };
   }
   
@@ -57,7 +57,7 @@ export class unSdg extends DDDSuper(LitElement) {
       .img,
       .wrapper{
         width: var(--width, 200px); /*--width [defined in render()] = this.width; defaults to 200px if variable unsupported*/
-        background-color: var(--goal-color); /*--goal-color [defined in render()] set according to current this.goal */
+        background-color: var(--goal-color, white); /*--goal-color [defined in render()] set according to current this.goal */
         display: block; /* to remove weird margin when img is inline */
       }
 
@@ -113,8 +113,8 @@ export class unSdg extends DDDSuper(LitElement) {
   //This function returns URL object of image path according to this.goal
   getImgSrc(){
     // relative path wouldnt work on vercel so use github src link instead
-    // let path=String(`../lib/svg/${this.goal}.svg`);  
-    let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/45be96982fa85a9a6c922e1c40b06d35fe6e4579/lib/svg/${this.goal}.svg`); 
+    let path=String(`../lib/svg/${this.goal}.svg`);  
+    // let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/45be96982fa85a9a6c922e1c40b06d35fe6e4579/lib/svg/${this.goal}.svg`); 
     let imgSrc = new URL(path, import.meta.url).href; //create URL object to path defined
     return imgSrc;
   }
@@ -124,7 +124,7 @@ export class unSdg extends DDDSuper(LitElement) {
     return html`
       ${this.colorOnly ? html`
         <!-- if colorOnly is true, render div with class .color (for styling purposes) -->
-        <!-- CSS variable --width is set according this.width -->
+        <!-- CSS variable --width is set according to this.width -->
         <!-- CSS variable --goal-color is created and set according to current this.goal -->
         <div class="color wrapper"  style="--width: ${this.width}px; --goal-color: var(--un-sdg-color-${this.goal})" label="${this.getLabel()} color only"></div>                
       ` : html`
