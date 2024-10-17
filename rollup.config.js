@@ -24,7 +24,7 @@ export default {
     /** Resolve bare module imports */
     copy({
       targets: [
-        { src: 'lib/', dest: 'dist' }
+        { src: 'lib/', dest: 'public' }
       ]
     }),
     nodeResolve(),
