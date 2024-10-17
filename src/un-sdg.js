@@ -114,8 +114,9 @@ export class unSdg extends DDDSuper(LitElement) {
   getImgSrc(){
     // relative path wouldnt work on vercel (even after modifying rollup) so use github src link instead
     // let path=String(`../lib/svg/${this.goal}.svg`);  
-    let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/45be96982fa85a9a6c922e1c40b06d35fe6e4579/lib/svg/${this.goal}.svg`); 
-    let imgSrc = new URL(path, import.meta.url).href; //create URL object to path defined
+    let imgSrc = new URL(`../lib/svg/${this.goal}.svg`, import.meta.url).href; //create URL object to path defined
+    // let path=String(`https://raw.githubusercontent.com/nazman-hub/IST256-UN-SDG/45be96982fa85a9a6c922e1c40b06d35fe6e4579/lib/svg/${this.goal}.svg`); 
+    // let imgSrc = new URL(path, import.meta.url).href; //create URL object to path defined
     return imgSrc;
   }
 
