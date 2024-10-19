@@ -54,7 +54,7 @@ export class unSdg extends DDDSuper(LitElement) {
       }
 
       /* set width and bg-color of img, .color.wrapper, and .svg.wrapper  */
-      .img,
+      img,
       .wrapper{
         width: var(--width, 200px); /*--width [defined in render()] = this.width; defaults to 200px if variable unsupported*/
         background-color: var(--goal-color, white); /*--goal-color [defined in render()] set according to current this.goal */
