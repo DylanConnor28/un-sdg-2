@@ -2,29 +2,38 @@
 <html lang="en">
 
 <head>
+  <!-- Set the base URL, language, and metadata for the document -->
   <base href="/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="Description" content="Demonstration for un-sdg">
 
   <style>
+    /* Global styles: Set margins and background color for the root, html, and body */
     :root, html, body {
       margin: 0;
       padding: 0;
       background-color: var(--ddd-accent-1);
     }
+    
+    /* Styles for the demo container */
     #demo {
       margin: var(--ddd-spacing-2);
     }
+
+    /* Styles for the custom un-sdg elements */
     un-sdg {
       margin: var(--ddd-spacing-2);
     }
 
+    /* Example SDG styling: Font size, background, and color */
     #example {
       --un-sdg-font-size: var(--ddd-font-size-l);
       background-color: var(--ddd-accent-2);
       color: var(--ddd-primary-17);
     }
+
+    /* Flexbox container for wrapping content */
     .container{
       display: flex;
       flex-wrap: wrap;
@@ -34,91 +43,90 @@
 </head>
 
 <body>
+  <!-- Demo section displaying UN SDG content -->
   <div id="demo">
     <h1>un-sdg</h1>
-    <!-- this is going to do whatever the tag's defaults are -->
-    <!-- <h2>Default</h2>-->
-    <!-- <un-sdg label="custom "></un-sdg>  -->
 
-    
+    <!-- Section to display all SDGs -->
     <h2>All</h2>
-    <div class="container all">
-      <script>      
-      // display all goals 1-17
-        for (let i = 0; i < 17; i++) {
-            let sdg = document.createElement("un-sdg");
-            sdg.goal = i+1;
-            let container = document.querySelector(".all");
-            container.appendChild(sdg);
-        }
-        
-      </script>
-      <un-sdg goal="circle"></un-sdg>
-    </div>
-    <un-sdg goal="all" width="1000"></un-sdg>
+    <div class="container all"></div>
 
+    <!-- Section to display all color-only SDGs -->
     <h2>All Color</h2>
-    <div class="container all color">
-      <script>      
-      //display all color of goals 1-17
-        for (let i = 0; i < 17; i++) {
-            let sdg = document.createElement("un-sdg");
-            sdg.goal = i+1;
-            sdg.colorOnly=true;
-            let container = document.querySelector(".all.color");
-            container.appendChild(sdg);
-        }
-        
-      </script>
-      <un-sdg goal="circle" colorOnly></un-sdg>
-      <un-sdg goal="all" colorOnly></un-sdg>
-    </div>
-    
+    <div class="container all color"></div>
 
-
-    <h2>random</h2>
+    <!-- Section to randomize and display a single SDG and color-only version -->
+    <h2>Random</h2>
     <div class="container">
-      <un-sdg class="random-sdg" goal="1" ></un-sdg>
+      <un-sdg class="random-sdg" goal="1"></un-sdg>
       <un-sdg class="random-color" goal="1" colorOnly></un-sdg>
-
     </div>
     <button class="random-button" label="randomize">Randomize</button>
-    
-
-    <script>
-      document.querySelector(".random-button").addEventListener('click', (e)=> {
-        let randomNum = Math.floor(Math.random() * 17) + 1;
-        document.querySelector(".random-sdg").setAttribute('goal', randomNum);
-        document.querySelector(".random-color").setAttribute('goal', randomNum);
-      })
-
-
-    </script>
-    
   </div>
+
+  <!-- Import the un-sdg web component from a separate JavaScript file -->
   <script type="module" src="./src/un-sdg.js"></script>
 
-  <!-- Take HAX, the Web and you further down the rabbit hole -->
+  <script>
+    // Function to create all SDG goals 1-17 dynamically and append them to a container
+    function createAllGoals(containerSelector, colorOnly = false) {
+      const container = document.querySelector(containerSelector);
+      for (let i = 0; i < 17; i++) {
+        const sdg = document.createElement('un-sdg');
+        sdg.goal = i + 1;
+
+        // If colorOnly is true, apply the colorOnly attribute
+        if (colorOnly) {
+          sdg.colorOnly = true;
+        }
+        container.appendChild(sdg);
+      }
+    }
+
+    // Populate all normal and color-only SDGs on page load
+    createAllGoals(".all");
+    createAllGoals(".all.color", true);
+
+    // Randomize the SDG goal number when the button is clicked
+    document.querySelector(".random-button").addEventListener('click', () => {
+      const randomGoal = Math.floor(Math.random() * 17) + 1;
+      document.querySelector(".random-sdg").setAttribute('goal', randomGoal);
+      document.querySelector(".random-color").setAttribute('goal', randomGoal);
+    });
+  </script>
+
+  <!-- Section providing extra information about the project and links to resources -->
   <style>
+    /* Styles for the collapsible "follow-the-white-rabbit" details element */
     #follow-the-white-rabbit {
-      margin: var(--ddd-spacing-4) auto 64px  16px;
+      margin: var(--ddd-spacing-4) auto 64px 16px;
       background-color: var(--ddd-accent-4);
     }
+
+    /* Ensure summary background remains consistent when details are open */
     #follow-the-white-rabbit[open] summary {
       background-color: var(--ddd-accent-4) !important;
     }
+
+    /* Content padding inside the details section */
     #follow-the-white-rabbit[open] .content {
       padding: 0 var(--ddd-spacing-4);
     }
+
+    /* Remove default padding and margin for lists */
     #follow-the-white-rabbit ul,
     #follow-the-white-rabbit li {
       padding: 0;
       margin: 0;
     }
+
+    /* List item styles for the links inside the details */
     #follow-the-white-rabbit li {
       font-size: var(--ddd-font-size-xs);
       list-style: none;
     }
+
+    /* Bold and interactive list item styles */
     #follow-the-white-rabbit li strong,
     #follow-the-white-rabbit li a {
       padding: var(--ddd-spacing-2) var(--ddd-spacing-4);
@@ -126,34 +134,41 @@
       display: block;
       font-weight: bold;
     }
+
+    /* Hover and focus effects for links inside the details */
     #follow-the-white-rabbit li:focus-within a,
     #follow-the-white-rabbit li:hover a {
       background-color: black;
       color: yellow;
     }
   </style>
+
   <details id="follow-the-white-rabbit" open>
     <summary>How to Develop</summary>
     <div class="content">
       <p>
-      
-        <strong>Checkout project on github:</strong> <a href="https://github.com/nazman-hub/IST256-UN-SDG" target="_blank" rel="nofollow">nzmn/un-sdg</a>
-        
+        <!-- Link to GitHub repository for the project -->
+        <strong>Checkout project on github:</strong>
+        <a href="https://github.com/DylanConnor28/un-sdg-2" target="_blank" rel="nofollow">DylanConnor28/un-sdg-2</a>
       </p>
       <p>
+        <!-- Instructions for editing the project -->
         You can edit the current page by modifying <code>index.html</code><br />
         To edit your <strong>un-sdg</strong> tag, modify <code>src/un-sdg.js</code>.
         This file contains all the HTML, CSS and JavaScript used to render your elements above!
       </p>
       <p>
+        <!-- Encouragement for developers new to web components -->
         Web components are easy to follow once you get used to their pattern.
         Below are links to help on your journey. Good luck, we need you!
       </p>
       <ul>
+        <!-- Useful learning resources related to the project -->
         <li><a href="https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd" target="_blank">🧑‍🎨 Learn DDD HAX Design system</a></li>
         <li><a href="https://lit.dev/playground/" target="_blank" rel="nofollow">🔥 Learn Lit</a></li>
         <li><a href="https://hax.psu.edu" target="_blank">🧙 HAX The Web @ Penn State</a></li>
       </ul>
+      <!-- More links and resources for learning Git, web development, and inspiration -->
       <h2>Join and Share HAX</h2>
       <ul>
         <li><a href="https://github.com/haxtheweb/issues/issues" target="_blank" rel="nofollow">🔮 Ideas to HAX Harder, Better, Faster, Stronger</a></li>
@@ -179,4 +194,5 @@
     </div>
   </details>
 </body>
+
 </html>
